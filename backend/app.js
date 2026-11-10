@@ -7,8 +7,20 @@ const cookieParser = require('cookie-parser')
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
+// app.use(errorMiddleware)
+
 app.use('/api/auth', authRoutes)
 app.use('/api',noteRoutes)
+
+app.use("/test",(req,res)=>{
+    console.log("hello")
+
+    // const {} = req.body
+
+    throw new Error("hello from test")
+
+    res.json({hello:"hii"})
+})
 
 app.use((req, res) => {
   return res.status(404).json({
@@ -18,5 +30,6 @@ app.use((req, res) => {
 });
 
 app.use(errorMiddleware)
+
 
 module.exports = app
